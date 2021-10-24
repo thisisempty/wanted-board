@@ -33,9 +33,9 @@ class PostView(View):
         try :
             queryset = Post.objects.select_related('user')[offset:offset+limit]
             data = [{
+                'post_id'    : post.id,
                 'user_id'    : post.user.account_id,
                 'title'      : post.title,
-                'body'       : post.body,
                 'created_at' : post.created_at
             }for post in queryset]
 
@@ -85,6 +85,7 @@ class PostDetailView(View):
             result = {
                 "user_id" : post.user.account_id,
                 "title"   : post.title,
+                "body"    : post.body,
                 "created_at" : post.created_at
             }
             return JsonResponse(result, status=200)
