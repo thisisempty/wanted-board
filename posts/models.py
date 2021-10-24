@@ -5,7 +5,7 @@ from core.models import TimeStamp
 from users.models import User
 
 class Post(TimeStamp):
-    uesr_id = models.ForeignKey(User, on_delete=CASCADE)
+    uesr = models.ForeignKey(User, on_delete=CASCADE)
     title = models.CharField(max_length=100)
     body = models.TextField()
     
