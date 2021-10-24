@@ -27,7 +27,6 @@ class PostView(View):
             return JsonResponse({'message' : 'KEY_ERROR'}, status=400)
 
     def get(self, request):
-
         limit  = int(request.GET.get('limit', 30))
         offset = int(request.GET.get('offset', 0))
         
@@ -73,6 +72,26 @@ class PostView(View):
 
         except Post.DoesNotExist:
             return JsonResponse({'message' : 'DOES_NOT_EXIST'}, status=400)
+
+        except ValueError:
+            return JsonResponse({'message' : 'VALUE_ERROR'}, status=400)
+
+class PostDetailView(View):
+    def get(self, request):
+        post_id = request.GET.get('id')
+        try: 
+            post = Post.objects.select_related('user').get(id=post_id)
+
+            result = {
+                "user_id" : post.user.account_id,
+                "title"   : post.title,
+                "body"    : post.body,
+                "created_at" : post.created_at
+            }
+            return JsonResponse(result, status=200)
+
+        except Post.DoesNotExist:
+            return JsonResponse({'message' : 'DOES_NOT_EXIST'}, status=400)   
 
         except ValueError:
             return JsonResponse({'message' : 'VALUE_ERROR'}, status=400)
