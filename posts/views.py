@@ -69,6 +69,8 @@ class PostView(View):
         try:
             Post.objects.get(user_id=request.user.id, id=post_id).delete()
 
+            return JsonResponse({'message' : 'SUCCESS'}, status=200)
+
         except Post.DoesNotExist:
             return JsonResponse({'message' : 'DOES_NOT_EXIST'}, status=400)
 
