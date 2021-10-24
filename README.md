@@ -36,31 +36,33 @@
 - password : 유저가 사용할 password
   
 ### response 예시
+#### 성공시
 ``` json
-// 성공 시
 {
     "message": "SUCCESS"
 }
-
-// 실패 시 
-// 필요한 값이 누락 되었을 시
+```
+#### 실패시
+- 필요한 값 누락시
+```json
 { 
     "message" : "KEY_ERROR"
 }
-
-// 존재하는 id 사용 시
+```
+- 중복된 아이디 사용 시
+``` json
 { 
     "message" : "ALREADY_EXIST"
 }
-
-// 비밀번호 정규화 식에 맞지 않을 시
-// 8자리 이상, 특수문자, 소문자, 대문자 포함
+```
+- 비밀번호 8자리 이상, 소문자, 대문자, 특수문자 미포함시
+``` json
 {
     "message" : "INVAILD_PASSWORD"
 }
-
-// 아이디 정규화 식에 맞지 않을 시
-// 소문자, 숫자, -_. 만 사용 가능
+```
+- 소문자, 특수문자, 숫자 이외의 값 사용시
+```json
 {
     "message" : "INVAILD_ID"
 }
@@ -85,23 +87,28 @@
 ```
 
 ### response 예시
+#### 성공시
 ``` json 
-// 성공시
 {
   "ACCESS_TOKEN": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NX0.kjySYfRP9DYViWyNPW0YGchAs6p5bnstirSN5P91yMM"
 }
+```
 
-// 실패시
-// 패스워드 틀릴 경우
+#### 실패시
+- 패스워드 틀릴 경우
+``` json
 {
     "message" : "INVALID_PASSWORD"
 }
-// 필요한 값 누락 시
+```
+- 필요한 값 누락 시
+``` json
 { 
     "message" : "KEY_ERROR"
 }
-
-// 존자하지 않는 아이디 사용 시
+```
+- 존재하지 않는 아이디 사용 시
+``` json
 { 
     "message" : "DOES_NOT_EXIST"
 }
@@ -124,23 +131,25 @@
 
 ### request 예시
 ``` json 
-headers : {
+{ "headers" : {
     "Authorization" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NX0.kjySYfRP9DYViWyNPW0YGchAs6p5bnstirSN5P91yMM"
-}
-body : {
-	"title" : "게시물 제목",
-	"body"  : "게시물 내용"
+    },
+    "body" : {
+        "title" : "게시물 제목",
+        "body"  : "게시물 내용"
+    }
 }
 ```
 ### response 예시
+#### 성공시
 ``` json
-// 성공 시
 {
     "message": "SUCCESS"
 }
-
-// 실패 시 
-// 필요한 값 누락 시
+``` 
+#### 실패 시 
+- 필요한 값 누락 시
+``` json
 { 
     "message" : "KEY_ERROR"
 }
@@ -152,30 +161,32 @@ body : {
 
 |METHOD|PATH|request|response|
 |:--:|:--:|:--:|:--:|
-|`POST`|`/posts/<int:post_id>`|(JSON) access_token, title, body  | (JSON) 에러 / 성공 메시지 |
+|`POST`|`/posts/<int:post_id>`|(JSON) access_token, (title, body)  | (JSON) 에러 / 성공 메시지 |
 - access_token : 유저 로그인 시 발행된 access_token
 - title : 수정할 게시물 제목
 - body : 수정할 게시물 내용
 
 ### request 예시
 ``` json 
-headers : {
+{ "headers" : {
     "Authorization" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NX0.kjySYfRP9DYViWyNPW0YGchAs6p5bnstirSN5P91yMM"
-}
-body : {
-	"title" : "수정한 게시물 제목",
+    },
+    "body" : {
+        "title" : "수정할 게시물 제목",
+    }
 }
 ```
 
 ### response 예시
+#### 성공시
 ``` json
-// 성공 시
 {
     "message": "SUCCESS"
 }
-
-// 실패 시 
-// 존재하지 않는 게시물을 수정 요청 할 시 
+```
+#### 실패시
+- 존재하지 않는 게시물 수정 요청시
+``` json
 { 
     "message" : "DOES_NOT_EXIST"
 }
@@ -190,21 +201,25 @@ body : {
 - access_token : 유저 로그인 시 발행된 access_token
 
 ### request 예시
+#### 성공시
 ``` json 
-headers : {
+{ "headers" : {
     "Authorization" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NX0.kjySYfRP9DYViWyNPW0YGchAs6p5bnstirSN5P91yMM"
+    }
 }
 ```
 
 ### response 예시
+#### 성공시
 ``` json
-// 성공 시
 {
     "message": "SUCCESS"
 }
+```
 
-// 실패 시 
-// 존재하지 않는 게시물을 삭제 요청 할 시 
+#### 실패 시 
+- 존재하지 않는 게시물을 삭제 요청 할 시 
+``` json
 { 
     "message" : "DOES_NOT_EXIST"
 }
@@ -218,17 +233,19 @@ headers : {
 |`POST`|`/posts/detail?id=<int:post_id>`| None | (JSON) 게시물 정보 / 에러 메시지 |
 
 ### response 예시
+#### 성공시
 ``` json
-// 성공 시
+
 {
   "user_id": "sampleid1234",
   "title": "게시물 제목",
   "body": "게시물 내용",
   "created_at": "2021-10-24T08:23:16.673Z"
 }
-
-// 실패 시 
-// 존재하지 않는 게시물 정보를 요청 할 시 
+```
+#### 실패시
+- 존재하지 않는 게시물 정보를 요청 할 시 
+``` json
 { 
     "message" : "DOES_NOT_EXIST"
 }
@@ -243,8 +260,8 @@ headers : {
 |`POST`|`/posts?limit=5&offset=0| None | (JSON) 게시물 정보 / 에러 메시지|
 
 ### response 예시
+#### 성공시
 ``` json
-// 성공 시
 {
   "count": 5,
   "data": [
@@ -280,9 +297,11 @@ headers : {
     }
   ]
 }
-
-// 실패 시 
-// 잘못된 값으로 요청 시  
+```
+#### 실패시
+- 잘못된 값으로 요청 시  
+``` json
 { 
     "message" : "VALUE_ERROR"
 }
+```
