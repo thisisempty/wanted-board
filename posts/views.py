@@ -85,7 +85,6 @@ class PostDetailView(View):
             result = {
                 "user_id" : post.user.account_id,
                 "title"   : post.title,
-                "body"    : post.body,
                 "created_at" : post.created_at
             }
             return JsonResponse(result, status=200)
